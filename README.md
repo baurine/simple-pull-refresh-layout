@@ -1,11 +1,11 @@
-# Simple PullRefreshLayout
+# SimplePullRefreshLayout
 
-A very simple and easy to understand PullRefreshLayout, likes SwipeRefreshLayout, but much simple.
+A very simple, less features and easy to understand PullRefreshLayout, likes SwipeRefreshLayout, but much simple.
 
 ## Note
 
-1. [Simple PullRefreshLayout Note](./note/simple-pullrefreshlayout-note.md)
+1. [SimplePullRefreshLayout Note](./note/simple-pullrefreshlayout-note.md)
 
-## Sample
+## Samples
 
-## Usage
+![](./note/art/1_sample.gif)
