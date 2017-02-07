@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.animation.Interpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
@@ -25,14 +27,23 @@ public class SimplePullRefreshLayout extends ViewGroup {
     }
 
     /////////////////////////////////////////////
-    private Scroller scroller;
+    private Interpolator interpolator;
+
+    public void setInterpolator(Interpolator interpolator) {
+        this.interpolator = interpolator;
+        scroller = new Scroller(getContext(), interpolator);
+    }
+
+    /////////////////////////////////////////////
     private int touchSlop;
+    private Scroller scroller;
 
     public SimplePullRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         parseAttrs(context, attrs);
-        scroller = new Scroller(context);
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        // setInterpolator(new DecelerateInterpolator());
+        setInterpolator(new OvershootInterpolator());
     }
 
     private void parseAttrs(Context context, AttributeSet attrs) {
