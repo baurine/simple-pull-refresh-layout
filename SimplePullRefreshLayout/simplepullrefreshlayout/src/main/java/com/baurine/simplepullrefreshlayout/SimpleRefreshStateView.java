@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,28 +53,32 @@ public class SimpleRefreshStateView
     private final static int STATE_BACK_TO_PULL = 2;
     private final static int STATE_LOADING = 3;
     private int lastState = STATE_PULL_INIT;
+    private Interpolator interpolator = new AccelerateDecelerateInterpolator();
 
     private void changeState(int state) {
         lastState = state;
         switch (state) {
             case STATE_PULL_INIT:
+                tvLoading.setVisibility(View.GONE);
+                tvState.setVisibility(View.VISIBLE);
                 tvState.setText(R.string.pull_refresh);
+                arrowContainer.setVisibility(View.VISIBLE);
                 ivArrow.setRotation(0f);
-                ivArrow.setVisibility(View.VISIBLE);
                 break;
             case STATE_TO_RELEASE:
                 tvState.setText(R.string.release_refresh);
                 ivArrow.setRotation(0f);
-                ivArrow.animate().rotation(180f).setDuration(150);
+                ivArrow.animate().rotation(180f).setDuration(250).setInterpolator(interpolator);
                 break;
             case STATE_BACK_TO_PULL:
                 tvState.setText(R.string.pull_refresh);
                 ivArrow.setRotation(180f);
-                ivArrow.animate().rotation(360f).setDuration(150);
+                ivArrow.animate().rotation(360f).setDuration(250).setInterpolator(interpolator);
                 break;
             case STATE_LOADING:
-                tvState.setText(R.string.loading);
-                ivArrow.setVisibility(View.GONE);
+                tvLoading.setVisibility(View.VISIBLE);
+                arrowContainer.setVisibility(View.GONE);
+                tvState.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -79,7 +86,8 @@ public class SimpleRefreshStateView
     }
 
     ////////////////////////////////////////////////////////////
-    private TextView tvState;
+    private TextView tvState, tvLoading;
+    private ViewGroup arrowContainer;
     private ImageView ivArrow;
 
     public SimpleRefreshStateView(Context context) {
@@ -89,11 +97,14 @@ public class SimpleRefreshStateView
     public SimpleRefreshStateView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initViews(context);
+        changeState(STATE_PULL_INIT);
     }
 
     private void initViews(Context context) {
         LayoutInflater.from(context).inflate(R.layout.view_refresh_state, this);
         tvState = (TextView) findViewById(R.id.tv_state);
+        tvLoading = (TextView) findViewById(R.id.tv_loading);
+        arrowContainer = (ViewGroup) findViewById(R.id.arrow_container);
         ivArrow = (ImageView) findViewById(R.id.iv_arrow);
     }
 }

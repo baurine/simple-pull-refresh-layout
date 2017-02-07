@@ -5,30 +5,44 @@
     tools:showIn="@layout/playground">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="72dp">
 
-        <ImageView
-            android:id="@+id/iv_arrow"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/arrow_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+
+            <ImageView
+                android:id="@+id/iv_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_arrow"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_loading"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:src="@drawable/ic_arrow"/>
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/loading"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tv_state"
-            android:layout_width="160dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:layout_weight="3"
             android:text="@string/pull_refresh"
-            android:textColor="#ffffff"
+            android:textColor="@android:color/white"
             android:textStyle="bold"/>
-
     </LinearLayout>
-
 </merge>

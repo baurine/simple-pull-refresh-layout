@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SimplePullRefreshLayout</string>
 
-    <string name="pull_refresh">Pull to refreshing&#8230;</string>
-    <string name="release_refresh">Release to refreshing&#8230;</string>
+    <string name="pull_refresh">Pull to refresh&#8230;</string>
+    <string name="release_refresh">Release to refresh&#8230;</string>
     <string name="loading">Loading&#8230;</string>
 </resources>
