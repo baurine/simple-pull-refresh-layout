@@ -26,7 +26,8 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:text="@string/pull_refresh"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
