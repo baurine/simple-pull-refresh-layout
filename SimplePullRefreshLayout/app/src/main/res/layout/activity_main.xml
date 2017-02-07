@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000000"
+        app:drag_coefficient="0.7"
         app:extra_height="20dp">
 
         <!-- you can replace this default SimpleRefreshStateView by yourself implementation

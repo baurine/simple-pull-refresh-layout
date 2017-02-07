@@ -35,6 +35,15 @@ public class SimplePullRefreshLayout extends ViewGroup {
     }
 
     /////////////////////////////////////////////
+    private static final float DEF_DRAG_COEFFICIENT = 0.7f;
+    // dragCoefficient should between 0.0 and 1.0
+    private float dragCoefficient = DEF_DRAG_COEFFICIENT;
+
+    public void setDragCoefficient(float dragCoefficient) {
+        this.dragCoefficient = dragCoefficient;
+    }
+
+    /////////////////////////////////////////////
     private int touchSlop;
     private Scroller scroller;
 
@@ -51,6 +60,11 @@ public class SimplePullRefreshLayout extends ViewGroup {
                 R.styleable.SimplePullRefreshLayout);
         extraHeight = typedArray.getDimensionPixelSize(
                 R.styleable.SimplePullRefreshLayout_extra_height, -1);
+        dragCoefficient = typedArray.getFloat(
+                R.styleable.SimplePullRefreshLayout_drag_coefficient, DEF_DRAG_COEFFICIENT);
+        if (dragCoefficient < 0.0f || dragCoefficient > 1.0f) {
+            throw new RuntimeException("drag_coefficient should between 0.0 and 1.0");
+        }
         typedArray.recycle();
     }
 
@@ -131,7 +145,7 @@ public class SimplePullRefreshLayout extends ViewGroup {
                 lastY = startY;
                 break;
             case MotionEvent.ACTION_MOVE:
-                int diff = (int) (ev.getRawY() - startY);
+                int diff = (int) ((ev.getRawY() - startY) * dragCoefficient);
                 if (diff > touchSlop) {
                     return true;
                 }
@@ -148,7 +162,7 @@ public class SimplePullRefreshLayout extends ViewGroup {
                 return true;
             case MotionEvent.ACTION_MOVE:
                 float curY = event.getRawY();
-                int scrollY = (int) (lastY - curY);
+                int scrollY = (int) ((lastY - curY) * dragCoefficient);
                 int totalY = getScrollY() + scrollY;
                 if (totalY > -totalStateHeight
                         && totalY < 0) {

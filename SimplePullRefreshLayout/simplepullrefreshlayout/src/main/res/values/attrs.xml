@@ -3,6 +3,7 @@
 
     <declare-styleable name="SimplePullRefreshLayout">
         <attr name="extra_height" format="dimension"/>
+        <attr name="drag_coefficient" format="float"/>
     </declare-styleable>
 
 </resources>
