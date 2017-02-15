@@ -26,8 +26,10 @@ Add JitPack as library source in your project build.gradle:
 Then, add dependency in your app module build.gradle:
 
     dependencies {
-        compile 'com.github.baurine:simple-pull-refresh-layout:1.0.0'
+        compile 'com.github.baurine:simple-pull-refresh-layout:${latest-version}'
     }
+
+`latest-version`: see header JitPack badge.
 
 ## Usage
 
@@ -41,6 +43,7 @@ XML:
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000000"
+        app:drag_coefficient="0.7"
         app:extra_height="20dp">
 
         <!-- you can replace this default SimpleRefreshStateView by yourself implementation
@@ -91,6 +94,13 @@ You can define yourself RefreshStateView and put it inside SimplePullRefreshLayo
 
         void setRefreshing(boolean refreshing);
     }
+
+custom attributes:
+
+attr | type | default value
+-----|------|--------------
+extra_height     | demension | same with RefreshStateView height
+drag_coefficient | float     | 0.7
 
 License
 -------

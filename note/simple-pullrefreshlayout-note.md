@@ -23,6 +23,7 @@ XML:
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000000"
+        app:drag_coefficient="0.7
         app:extra_height="20dp">
 
         <!-- you can replace this default SimpleRefreshStateView by yourself implementation
@@ -76,11 +77,11 @@ SimplePullRefreshLayout 内部有一个默认的用来显示状态的 SimpleRefr
 
 ### 实现思路
 
-1. 在 layout 时，把 RefreshStateView 隐藏在 RecyclerView 上面，初始化时看不到；
-1. 在 onInterceptTouchEvent 中监控向下的滑动动作，如果向下的滑动距离超过 touchSlop，则拦截之；(处理滑动冲突主要靠 onInterceptTouchEvent)
+1. 在 layout 时，把 RefreshStateView 隐藏在 RecyclerView 顶部，初始化时看不到。
+1. 在 onInterceptTouchEvent 中监控向下的滑动动作，如果向下的滑动距离超过 touchSlop，则拦截之。(处理滑动冲突主要靠 onInterceptTouchEvent)
 1. 拉截以后，触摸事件会跳过 onInterceptTouchEvent，直接交给 onTouchEvent 处理。
-1. 我们在 onTouchEvent 中处理 `ACTION_MOVE` 动作，使用 scrollBy 方法，随着手指的向下滑动，控制 SimplePullRefreshLayout 也向下滚动其中的内容，这时，之前隐藏在顶部的 RefreshStateView 就会逐渐显示出来；
-1. RefreshStateView 根据自身显示出来的比例，控制内部的 View 以呈现不同的状态；
+1. 我们在 onTouchEvent 中处理 `ACTION_MOVE` 动作，使用 scrollBy 方法，随着手指的向下滑动，控制 SimplePullRefreshLayout 也向下滚动其中的内容，这时，之前隐藏在顶部的 RefreshStateView 就会逐渐显示出来。
+1. RefreshStateView 根据自身显示出来的比例，控制内部的 View 以呈现不同的状态。
 1. 当手指弹起时，即处理 `ACTION_UP` 动作，如果滑动的距离超过了 RefreshStateView 的阈值高度，那么 RefreshStateView 将呈现 loading 状态，并且滚动距离悬停在阈值高度；如果没有超过，那么 RefreshStateView 将隐藏。这两种情况都将使用 scroller 来实现平滑的滚动。
 
 ### 对自定义 View/ViewGroup 的总结
@@ -105,6 +106,8 @@ SimplePullRefreshLayout 内部有一个默认的用来显示状态的 SimpleRefr
 狭义的自定义 View 由于是最底层的 View，所以不需要处理 ViewGroup 才有的 onInterceptTouchEvent()，也不需要处理 onLayout()。
 
 自定义 ViewGroup 侧重于事件处理和 onLayout()，而狭义的自定义 View 侧重于 onDraw()。
+
+onMeasure()，尺寸计算，取决于 `layout_width` 和 `layout_height`，margin, padding 还有 content，通过这些值就可以计算出来，与 view 放置的位置 (即布局) 和是否已经渲染无关。
 
 自定义 ViewGroup 的种类：
 
