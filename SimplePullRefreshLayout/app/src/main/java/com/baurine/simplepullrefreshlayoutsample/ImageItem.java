@@ -11,7 +11,7 @@ import com.baurine.multitypeadapter.MultiTypeAdapter;
 
 public class ImageItem implements MultiTypeAdapter.IItem {
     @Override
-    public int getType() {
+    public int getLayout() {
         return R.layout.item_image;
     }
 
